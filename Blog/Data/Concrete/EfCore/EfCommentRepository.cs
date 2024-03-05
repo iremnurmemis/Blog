@@ -1,0 +1,22 @@
+using Blog.Data.Abstract;
+using Blog.Data.Concrete.EfCore;
+using Blog.Entity;
+
+namespace Blog.Data.Concrete{
+
+    public class EfCommentRepository : ICommentRepository
+    {
+        private BlogContext _context;
+        public EfCommentRepository(BlogContext context)
+        {
+            _context=context;
+        }
+        public IQueryable<Comment> Comments => _context.Comments;
+
+        public void CreateComment(Comment comment)
+        {
+            _context.Comments.Add(comment);
+            _context.SaveChanges();
+        }
+    }
+}
